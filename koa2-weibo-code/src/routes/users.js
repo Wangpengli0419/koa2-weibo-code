@@ -21,7 +21,7 @@ router.post('/login', async (ctx, next) => {
   }
 })
 let eventList = [];
-router.post('/rrweb', async (ctx, next) => {
+router.post('/rrwebRecording', async (ctx, next) => {
   const { token, motion } = ctx.request.body;
   eventList.push(motion);
   ctx.body = {
@@ -41,7 +41,7 @@ router.get('/getrrweb', function (ctx, next) {
 })
 
 
-router.post('/getInfoByName', async function (ctx, next) {
+router.post('/mongoselectData', async function (ctx, next) {
   const { name } = ctx.request.body;
   console.log(dbServer.add(1,2))
   await dbServer.selectData({ "name": name }).then((val) => {

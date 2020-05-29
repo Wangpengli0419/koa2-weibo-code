@@ -1,8 +1,8 @@
 
 const MongoClient = require('mongodb')
-const { MongoUrl, MongoPort } = require('./conf')
+const { MongoConf } = require('./conf')
 
-const DB_URL = `${MongoUrl}${MongoPort}`;
+const DB_URL = `${MongoConf.url}${MongoConf.port}`;
 let table;
 MongoClient.connect(DB_URL, (err, client) => {
     if (err) return console.error(err);

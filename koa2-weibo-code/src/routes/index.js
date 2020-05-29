@@ -22,10 +22,21 @@ router.get('/', async (ctx, next) => {
 
   })
 })
-router.get('/rrweb', async (ctx, next) => {
-  await ctx.render('rrweb', {
+router.get('/rrwebRecording', async (ctx, next) => {
+  await ctx.render('rrwebRecording', {
     title: 'Hello Koa 2!',
+  })
+})
+router.get('/rrwebReplay', async (ctx, next) => {
+  await ctx.render('rrwebReplay', {
+    title: 'Hello Koa 2!',
+  })
+})
 
+
+router.get('/mongo', async (ctx, next) => {
+  await ctx.render('mongo', {
+    title: 'Hello Koa 2!',
   })
 })
 
