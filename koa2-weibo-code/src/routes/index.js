@@ -22,6 +22,12 @@ router.get('/', async (ctx, next) => {
 
   })
 })
+router.get('/rrweb', async (ctx, next) => {
+  await ctx.render('rrweb', {
+    title: 'Hello Koa 2!',
+
+  })
+})
 
 
 router.get('/json', async (ctx, next) => {

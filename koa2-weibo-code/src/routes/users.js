@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-
+const dbServer = require('../db/dbServer')
 router.prefix('/users')
 
 router.get('/', function (ctx, next) {
@@ -10,14 +10,56 @@ router.get('/bar', function (ctx, next) {
   ctx.body = 'this is a users/bar response'
 })
 
-router.post('/login', async(ctx,next)=>{
-  const {userName,password} = ctx.request.body;
+router.post('/login', async (ctx, next) => {
+  const { userName, password } = ctx.request.body;
+  console.log(userName, password);
+  let newPwd = password + 100
   ctx.body = {
-    tag:100,
+    tag: 100,
     userName,
-    password
+    newPwd
   }
-  
+})
+let eventList = [];
+router.post('/rrweb', async (ctx, next) => {
+  const { token, motion } = ctx.request.body;
+  eventList.push(motion);
+  ctx.body = {
+    code: 1,
+    token,
+    motion
+  }
+})
+
+
+router.get('/getrrweb', function (ctx, next) {
+  ctx.body = {
+    title: 'getrrweb',
+    motion: eventList[eventList.length - 1],
+    time: new Date()
+  }
+})
+
+
+router.post('/getInfoByName', async function (ctx, next) {
+  const { name } = ctx.request.body;
+  console.log(dbServer.add(1,2))
+  await dbServer.selectData({ "name": name }).then((val) => {
+    console.log('val', val);
+    ctx.body = {
+      code: 1,
+      name,
+      val
+    }
+  }).catch((err) => {
+    console.error('err', err);
+    ctx.body = {
+      code: 0,
+      msg: `${name} not find`
+    }
+  })
+
+
 })
 
 module.exports = router
