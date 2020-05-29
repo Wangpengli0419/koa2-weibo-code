@@ -43,7 +43,7 @@ router.get('/getrrweb', function (ctx, next) {
 
 router.post('/mongoselectData', async function (ctx, next) {
   const { name } = ctx.request.body;
-  console.log(dbServer.add(1,2))
+  console.log(name)
   await dbServer.selectData({ "name": name }).then((val) => {
     console.log('val', val);
     ctx.body = {

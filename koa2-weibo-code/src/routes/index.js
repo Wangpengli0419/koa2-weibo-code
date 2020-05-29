@@ -42,14 +42,14 @@ router.get('/mongo', async (ctx, next) => {
 
 
 router.get('/json', async (ctx, next) => {
-  const session = ctx.session;
-  if (!session.viewNum) {
-    session.viewNum = 0;
-  }
-  session.viewNum++;
+  // const session = ctx.session;
+  // if (!session.viewNum) {
+  //   session.viewNum = 0;
+  // }
+  // session.viewNum++;
   ctx.body = {
     title: 'koa2 json',
-    session: session.viewNum
+    // session: session.viewNum
   }
 })
 router.get('/profile/:userName', async (ctx, next) => {
