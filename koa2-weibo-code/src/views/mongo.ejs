@@ -16,6 +16,10 @@
     <p>MongoDB Test</p>
     <input type="text" id="input">
     <button id="btn"> 查询</button><br>
+    <button id="btn_insert"> 插入</button><br>
+    <button id="btn_del"> 删除</button><br>
+    <button id="btn_replace"> 替换</button><br>
+
     <script type="text/javascript">
         document.querySelector("#btn").onclick = function () {
             // console.log( $('input').val());
@@ -34,6 +38,66 @@
                 }
             });
         }
+
+
+        document.querySelector("#btn_insert").onclick = function () {
+            // console.log( $('input').val());
+            let data = $('input').val();
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:9988/users/mongoInsertData", //访问的链接
+                data: {name:data},
+                dataType: 'json',
+                success: function (res) {  //成功的回调函数
+                    console.log(res);
+                },
+                error: function (e) {
+                    console.log("error");
+                    console.error(e);
+                }
+            });
+        }
+
+
+
+        document.querySelector("#btn_del").onclick = function () {
+            // console.log( $('input').val());
+            let data = $('input').val();
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:9988/users/mongoDeleteData", //访问的链接
+                data: {name:data},
+                dataType: 'json',
+                success: function (res) {  //成功的回调函数
+                    console.log(res);
+                },
+                error: function (e) {
+                    console.log("error");
+                    console.error(e);
+                }
+            });
+        }
+
+        
+        document.querySelector("#btn_replace").onclick = function () {
+            // console.log( $('input').val());
+            let data = $('input').val();
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:9988/users/mongoUpataData", //访问的链接
+                data: {name:data},
+                dataType: 'json',
+                success: function (res) {  //成功的回调函数
+                    console.log(res);
+                },
+                error: function (e) {
+                    console.log("error");
+                    console.error(e);
+                }
+            });
+        }
+
+        
     </script>
 </body>
 

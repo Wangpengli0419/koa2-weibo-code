@@ -1,14 +1,19 @@
 
-const MongoClient = require('mongodb')
-const { MongoConf } = require('./conf')
+const MongoClient = require('mongodb');
+const { MongoConf } = require('./conf');
 
 const DB_URL = `${MongoConf.url}${MongoConf.port}`;
 let table;
-MongoClient.connect(DB_URL, (err, client) => {
-    if (err) return console.error(err);
-    let DB = client.db('test')
-    table = DB.collection('vip');
-});
+MongoClient.connect(
+    DB_URL,
+    {
+        useUnifiedTopology: true
+    },
+    (err, client) => {
+        if (err) return console.error(err);
+        let DB = client.db('test');
+        table = DB.collection('vip');
+    });
 
 /**
  * 插入数据
@@ -16,17 +21,17 @@ MongoClient.connect(DB_URL, (err, client) => {
  */
 let insertData = async (data) => {
     return await new Promise((resolve, reject) => {
-        table.insert(data, function (error, result) {
+        table.insertOne(data, function (error, result) {
             if (error) {
                 console.log('Error:' + error);
-                reject(error)
+                reject(error);
             } else {
                 console.log(result.result.n);
-                resolve(result)
+                resolve(result);
             }
         });
-    })
-}
+    });
+};
 
 
 
@@ -41,17 +46,17 @@ let insertData = async (data) => {
 let updateData = async (whereData, updateData) => {
     return await new Promise((resolve, reject) => {
         let updateDat = { $set: updateData }; //如果不用$set，替换整条数据
-        table.update(whereData, updateDat, function (error, result) {
+        table.updateOne(whereData, updateDat, function (error, result) {
             if (error) {
                 console.log('Error:' + error);
-                reject(error)
+                reject(error);
             } else {
                 console.log(result);
-                resolve(result)
+                resolve(result);
             }
         });
-    })
-}
+    });
+};
 
 
 
@@ -62,17 +67,17 @@ let updateData = async (whereData, updateData) => {
  */
 let deleteData = async (whereStr) => {
     return await new Promise((resolve, reject) => {
-        table.remove(whereStr, function (error, result) {
+        table.deleteOne(whereStr, function (error, result) {
             if (error) {
                 console.log('Error:' + error);
-                reject(error)
-                return
+                reject(error);
+                return;
             } else {
-                resolve(result)
+                resolve(result);
             }
-        })
-    })
-}
+        });
+    });
+};
 
 
 
@@ -88,24 +93,24 @@ let selectData = async (whereStr) => {
                 if (doc) {
                     // console.log(doc);
                     if (doc.addTime) {
-                        console.log("addTime: " + doc.addTime);
+                        console.log('addTime: ' + doc.addTime);
                     }
-                    resolve(doc)
+                    resolve(doc);
                 } else {
                     reject(error);
                 }
             });
         });
-    })
-}
+    });
+};
 
-let add = (a,b)=>{
-    return a+b;
-}
+let add = (a, b) => {
+    return a + b;
+};
 module.exports = {
     insertData,
     updateData,
     deleteData,
     selectData,
     add
-}
+};
